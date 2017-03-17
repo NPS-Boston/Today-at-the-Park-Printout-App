@@ -1,0 +1,585 @@
+﻿<!DOCTYPE html>
+<html>
+  <head id="pageHead">
+  <meta name="google-site-verification" content="15x3hoylrOQ-sVCGrBMR0McOG03_nl_XP-XMFrFk6h4" />
+<title>Printable &quot;Today at the Park&quot; for the Freedom Trail and Black Heritage Trail - go.nps.gov/todayinboston</title>
+<meta name="description" content="Get daily tour, talk, exhibit, and event schedules for the Freedom Trail and Black Heritage Trail.">
+<meta name="author" content="National Park Service - Boston National Historical Park">
+<META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
+<meta charset="UTF-8">
+<meta id="viewport" name=viewport content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <link rel="stylesheet" href="jquery-ui.css">
+  <link id="TAP_Default" rel="stylesheet" type="text/css" media="screen and (min-width:769px)" href="TAP_default.css">
+  <link id="TAP_Mobile" rel="stylesheet" type="text/css" media="screen and (max-width:768px)" href="TAP_mobile.css">
+  <style>
+  li {
+	display:block;
+  }
+  .infoBlock {
+  /*border-bottom: 1.5px solid black;*/
+  }
+  .siteColLeft {
+	width:33%;
+	vertical-align:middle;
+	box-sizing: border-box;
+	text-align: center;
+  }
+  .siteColLeft img {
+	max-width:100%;
+  }
+  .siteColRight
+  {
+	width:66%;
+	box-sizing: border-box;
+  }
+  .twoCol
+  {
+	width:100%;
+  }
+  span.starRule {
+	width: 90%;
+    margin-left: 5%;
+    border-right: 1in solid black;
+    border-left: 1in solid black;
+    height: 1px;
+    box-sizing: border-box;
+    text-align: center;
+	position: relative;
+    top: .125in;
+    margin-top: .0625in;
+  }
+  span.starRule:after {
+    content: "\2605";
+    height: .5em;
+    position: relative;
+    top: -8pt;
+    font-size: 12pt;
+}
+.frontColumn1 {
+height:9.5in;
+width:33%;
+position:relative;
+top:0;
+left:0;
+}
+.frontColumn2 {
+height:9.5in;
+width:33%;
+position:relative;
+top:-9.5in;
+left:33%;
+}
+.frontColumn3 {
+height:9.5in;
+width:33%;
+position:relative;
+top:-19in;
+left:66%;
+}
+  </style>
+	<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="jquery-ui.min.js"></script>
+	<script type="text/javascript">
+	 function isMobile(){
+if($(window).width() <= 768)
+{return true;}
+else{return false;}
+
+}
+function redrawwindow()
+{
+	if(!isMobile()){document.getElementById("TAP_Print").href="TAP_print.css";}
+	else{document.getElementById("TAP_Print").href="TAP_mobile.css";}
+	$(".events").empty();
+	postEvents("BHT",BHTEvents,0);
+	postEvents("FTDT",FTDTEvents,0);
+	postEvents("FTFH",FTFHEvents,0);
+	postEvents("FTNE",FTNEEvents,0);
+	postEvents("FTC",FTCEvents,0);
+}
+$(document).ready(function() {
+	if(!isMobile()){
+		$("head").append($('<link id="TAP_Print" rel="stylesheet" type="text/css" media="print" href="TAP_print.css">'))
+			$( "#dateDialogContainer" ).dialog({
+		autoOpen: false,
+		show: {
+			effect: "blind",
+			duration: 500
+		},
+		position: {
+			my: "left top",
+			at: "right center",
+			of: $("#changeDate")
+		},
+		width: "auto",
+		resizable: false,
+		draggable: false
+	});
+	}
+	else{
+		$("head").append($('<link id="TAP_Print" rel="stylesheet" type="text/css" media="print" href="TAP_mobile.css">'))
+		$( "#dateDialogContainer" ).dialog({
+		autoOpen: false,
+		show: {
+			effect: "blind",
+			duration: 500
+		},
+		position: {
+			my: "left bottom",
+			at: "left top",
+			of: $("#changeDate")
+		},
+		width: "auto",
+		resizable: false,
+		draggable: false
+	});
+	}
+	$( "#setDate" ).datepicker();
+	$('#about').dialog({ autoOpen: false, maxHeight: 600, minWidth: 600 });
+	$( ".ui-datepicker-inline" ).css({background:"white"});
+
+	
+	
+	$("#dateDialogContainer").parent().css({position:"fixed"});
+	$( "#changeDate" ).click(function(event) {
+		$( "#dateDialogContainer" ).dialog( "open" );
+		event.stopPropagation();
+	});
+	$("#todaysDate").html("<i>Today&apos;s Date</i>: " + verboseDate(new Date()));
+	$("#currentDateViewed").html("<i>Date Displayed</i>: " + verboseDate(theUTCDate));
+	$('.page').click(function() {
+		$( "#dateDialogContainer" ).dialog( "close" );
+	});
+	$("#printDialog").click(function() {
+			$( "#dateDialogContainer" ).dialog( "close" );
+			$( "#about" ).dialog( "close" );
+			window.print();
+		});
+});
+	</script>
+	<script type="text/javascript">
+	//setup commands.
+	var theDate;
+	var theUTCDate;
+	var TAPData;
+	var BHTEvents;
+	var FTDTEvents;
+	var FTFHEvents;
+	var FTNEEvents;
+	var FTCEvents;
+	var OverflowEvents;
+	var EventsBeyond;
+	
+	var overflow_A_Default = '<div class="eventHeader" style="padding:.05in;"><img src="Junior_Ranger_grayscale_transparency.gif" style="height:1.25in;float:right;padding:3px;"><br><br>Kids of all ages are encouraged to Explore, Learn, and Protect at our National Parks in Boston. Ask a Park Ranger how to earn your Junior Ranger badge!</div>'
+	var overflow_B_Default = '<div class="siteInfo"><b><i>Save time and money with the Freedom Trail Ticket!</i></b></div><div class="siteInfoBody" style="background-color:white;height:.75in;margin:2px;"><span style="width: 2.375in;padding-top:.0625in;padding-left:.0625in;padding-right:.0625in;vertical-align:top;">Ticket covers three must-see Revolutionary Sites: The <b>Old South Meeting House</b>, <b>Old State House</b>, and <b>Paul Revere House</b>.</span><span><img src="OSMH.jpg" style="width:.5in;"><img src="OSH.jpg" style="width:.5in;"><img src="PRH.jpg" style="width:.5in;"></span></div><div class="siteInfoBody" style="font-weight:bold">Adults: $16.50 | Children (Ages 6-18): $2.00</div><div class="siteInfo" style="font-weight:normal;"><i>Available at the Faneuil Hall Visitor Center, Old South Meeting House, and Old State House</i></div>'
+
+	
+	//maximums for each neighborhood listing
+	//var maxHeight = {'BHT':$('#BHT_info').height(),FTDT:$('#FTDT_info').height(),FTFH:$('#FH_info').height(),FTNE:$('#FTNE_info').height(),FTC:$('#FTC_info').height()};
+	setDefaultDate();//converts UTC date to workable date with Google. Fired at load time.
+
+//DATE HANDLING FUNCTIONS
+
+//Make date display in a pretty, verbose fasion.
+function verboseDate(date){
+		var monthsProper = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+		var daysProper = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+		return daysProper[date.getUTCDay()] + ", " + monthsProper[date.getUTCMonth()] + " " + date.getUTCDate() + ", " + date.getFullYear();
+}
+
+//set theDate to API-friendly date of today.
+function setDefaultDate() 
+{
+	var currentDate;
+	if(dateArg())
+	{
+		currentDate = new Date(dateArg());
+	}
+	else
+	{
+		currentDate = new Date();
+	}
+
+		var year = currentDate.getUTCFullYear();
+		var month;
+		if(currentDate.getUTCMonth() < 9)
+		{
+			month = "0" + (currentDate.getUTCMonth() + 1);
+		}
+		else
+		{
+			month = currentDate.getUTCMonth() + 1;
+		}
+		
+		var day;
+		if(currentDate.getUTCDate() < 10)
+		{
+			day = "0" + currentDate.getUTCDate();
+		}
+		else
+		{
+			day = currentDate.getUTCDate();
+		}
+		theDate = year + "-" + month + "-" + day;
+		theUTCDate = currentDate;
+}
+
+//change date to custom user-defined day with calendar pager popup from jquery. Called by reset button, initiates reload of json data.
+function resetDate()
+{
+		var newDate=new Date(document.getElementById("setDate").value);
+		drawPaper();
+		
+		var year = newDate.getUTCFullYear();
+		if(newDate.getUTCMonth() < 9)
+		{
+			month = "0" + (newDate.getUTCMonth() + 1);
+		}
+		else
+		{
+			month = newDate.getUTCMonth() + 1;
+		}
+		
+		var day;
+		if(newDate.getUTCDate() < 10)
+		{
+			day = "0" + newDate.getUTCDate();
+		}
+		else
+		{
+			day = newDate.getUTCDate();
+		}
+		theDate = year + "-" + month + "-" + day;
+		theUTCDate = newDate;
+		loadJSON();
+}
+
+//Accept url arguments for custom date to load
+function dateArg()
+{
+	var urlArg = document.location.search;
+	var args = urlArg.split("date=");
+	if(args.length > 0)
+	{
+		return args[1];
+	}
+	else
+	{
+		return null;
+	}
+}
+
+
+//Main Functions!!
+
+//Handle animation of loader
+function drawPaper(state)
+{
+	var speed = 400;
+
+	if(state == "show")
+	{
+		$(".loader").animate({opacity: 0.0}, 1000, function(){
+			$(".loader").css("display","none");
+		});
+		
+	}
+	else
+	{
+		//$(".page").hide("slide",{direction:"right"}, speed);
+		//$(".page").animate({opacity: 0.0}, 1000);
+		$(".loader").css("display","block");
+		$(".loader").animate({opacity: 1.0}, 100);
+	}
+}
+
+function getHTML(eventObj, id)
+{
+if (isMobile())
+{
+return "<div id='" + id + "'><div class='eventHeader'>" + eventObj.title + "</div><div class='subEventHeader'>" + eventObj.formattedStartTime + eventObj.formattedEndTime + "<br>" + eventObj.location + "</div><div class='eventBody'>" + eventObj.content + "</div></span></div>";
+}
+else
+{
+return "<div id='" + id + "'><span class='eventTime'>" + eventObj.formattedStartTime + "<br>" + eventObj.formattedEndTime + "</span><span class='eventData'><div class='eventHeader'>" + eventObj.title + "</div><div class='subEventHeader'>" + eventObj.location + "</div><div class='eventBody'>" + eventObj.content + "</div></span></div>";
+}
+}
+
+
+//MAIN FUNCTION TO CALL JSONp REQUESTS. Uses custom API.
+	function loadJSON() {//called by body onload and successive new date requests.
+		var head = document.getElementsByTagName('head')[0];
+		var script = document.createElement('script');
+		script.type = 'text/javascript';
+		script.src	= 'https://script.google.com/macros/s/AKfycbzWZHsYFyn5Z7joDe4CvV5Q8azN6A2FE4Rby-EO06N_sauOxBNw/exec?callback=procTAP&date=' + theDate;
+		head.appendChild(script);
+	}
+	
+	
+//JSONp Callback - handles all the data!
+function procTAP(data){
+
+	$('.events').empty();
+
+	TAPData = (eval(data));
+
+	//check if all sites are closed!
+	if('ALL_SITES_CLOSED' in TAPData)
+	{
+		//$("#frontPage").style.visibility="hidden";
+		//$("#backPage").style.visibility="hidden";
+		$("body").append($("<div id='CLOSURE' title='All Sites Closed Today.' class='dontprint'></div>"))
+		$("#CLOSURE").html(TAPData.ALL_SITES_CLOSED);
+		$("#CLOSURE").dialog({maxHeight: 600, minWidth: 600 });
+	}
+	else
+	{
+	
+	BHTEvents = new Array();
+	FTDTEvents = new Array();
+	FTFHEvents = new Array();
+	FTNEEvents = new Array();
+	FTCEvents = new Array();
+	OverflowEvents = new Array();
+	EventsBeyond = new Array();
+	//append hours AND fees returned by API
+	for(var i = 0; i < TAPData.sites.length; i++)
+	{
+		$("#" + TAPData.sites[i].siteAbbr).html('<div class="siteInfoBody">' + TAPData.sites[i].fees + '</div><div>' + TAPData.sites[i].hours + '</div>');
+	}
+	
+	for(var j = 0; j < TAPData.events.length; j++)
+	{
+		loop1:
+			for(var i = 0; i < TAPData.sites.length; i++)
+			{
+			loop2:
+				for(var k = 0; k < TAPData.sites[i].keywords.length; k++)
+				{
+					//alert(TAPData.events[j].location + "    " + TAPData.sites[i].keywords[k]);
+					if(TAPData.events[j].location.search(TAPData.sites[i].keywords[k]) > -1)
+					{
+						switch(TAPData.sites[i].siteAbbr)
+						{
+							case "AMH":
+							case "OSMH":
+							case "OSH":
+							case "FHVC":
+							case "FHGH":
+							case "PRH":
+							case "ONC":
+								FTNEEvents.push(TAPData.events[j]);
+								break;
+							case "USSC":
+							case "USSCM":
+							case "USSCY":
+							case "CNYVC":
+							case "BH":
+							case "BHM":
+								FTCEvents.push(TAPData.events[j]);
+								break;
+						}
+						break loop1;
+					}
+				}
+				if(i==TAPData.sites.length-1){
+					EventsBeyond.push(TAPData.events[j]);
+				}
+			}
+	}
+	//postEvents("BHT",BHTEvents,0);
+	//postEvents("FTDT",FTDTEvents,0);
+	//postEvents("FTFH",FTFHEvents,0);
+	postEvents("FTNE",FTNEEvents,0);
+	postEvents("FTC",FTCEvents,0);
+
+	//last code handles overflow and events outside the scope of traditional neighborhoods.
+	if(EventsBeyond.length == 1)
+	{
+		$("#overflow_B").html(overflow_B_Default);
+		$("#overflow_A").html($('<div id="overflow_header" class="siteListHeader" style="margin-bottom:1em;">Special Event:</div>' + getHTML(EventsBeyond[0],"Event_Beyond_0")));
+	}
+	else
+	{
+		if(EventsBeyond.length == 2)
+		{
+			$("#overflow_A").html($('<div id="overflow_header" class="siteListHeader" style="margin-bottom:1em;">Special Event:</div>' + getHTML(EventsBeyond[0],"Event_Beyond_0")));
+			$("#overflow_B").html($('<div id="overflow_header" class="siteListHeader" style="margin-bottom:1em;">Special Event:</div>' + getHTML(EventsBeyond[1],"Event_Beyond_1")));
+		}
+		else
+		{
+			if(EventsBeyond.length >= 3)
+			{
+				$("#overflow_A").html($('<div id="overflow_header" class="siteListHeader" style="margin-bottom:1em;">Special Event:</div>' + getHTML(EventsBeyond[0],"Event_Beyond_0")));
+				$("#overflow_B").html($('<div id="overflow_header" class="siteListHeader" style="margin-bottom:1em;">Special Event:</div>' + getHTML(EventsBeyond[1],"Event_Beyond_1")));
+				for(var z = 2; z < EventsBeyond.length; z++)
+				{
+					$("#overflowbar").append($(getHTML(EventsBeyond[z],"Event_Beyond_" + z)));
+				}
+			}
+			else
+			{
+				$("#overflow_A").html(overflow_A_Default);
+				$("#overflow_B").html(overflow_B_Default);
+			}
+		}
+	}
+	
+	if($("#overflowbar > div").length == 1)
+	{
+		$("#overflowbar").prepend($("<h3>The following event is taking place, but could not fit on the print-out:</h3>"));
+	}
+	if($("#overflowbar > div").length > 1)
+	{
+		$("#overflowbar").prepend($("<h3>The following events are taking place, but cannot fit on the print-out:</h3>"));
+	}
+	$(".dateheader").html(verboseDate(theUTCDate))
+	
+	drawPaper("show");
+}
+}
+function postEvents(neighborhood,hoodArray,splitThreshold)
+{
+	var heightMax = $('#frontSites').height();
+	loopA:
+	for(var i = 0, il = hoodArray.length; i < il; i++)
+	{
+		var HTML = getHTML(hoodArray[i],"eventDiv_" + neighborhood + "_" + i);
+
+		$("#" + neighborhood + "_events_left").append($(HTML));
+
+		if($("#" + neighborhood + "_events_left").height()>heightMax)
+		{
+			$("#eventDiv_" + neighborhood + "_" + i).remove();
+			$("#" + neighborhood + "_events_right").append($(HTML));
+			if($("#" + neighborhood + "_events_right").height()>heightMax)
+			{
+				$("#" + neighborhood + "_events_left").empty();
+				$("#" + neighborhood + "_events_right").empty();
+				for(var i = 0, il = hoodArray.length; i < il; i++)
+				{
+					var HTML = getHTML(hoodArray[i],"eventDiv_" + neighborhood + "_" + i);
+					if(hoodArray[i].throwAway)
+					{	
+						$("#overflowbar").append($(HTML));
+					}
+					else
+					{
+						$("#" + neighborhood + "_events_left").append($(HTML));
+						if($("#" + neighborhood + "_events_left").height()>heightMax)
+						{
+							$("#eventDiv_" + neighborhood + "_" + i).remove();
+							$("#" + neighborhood + "_events_right").append($(HTML));
+							if($("#" + neighborhood + "_events_right").height()>heightMax)
+							{
+								$("#eventDiv_" + neighborhood + "_" + i).remove();
+								$("#overflowbar").append($(HTML));
+							}
+						}
+					}
+				}
+				break loopA;
+			}
+		}
+	}
+}
+
+
+	</script>
+  </head>
+  <body onload="loadJSON()" onresize='redrawwindow()'>
+	<div id="about" title="About this Webapp" class="dontprint">
+		<h2>Welcome to Boston National Historical Park and Boston African American National Historic Site's &quot;Today at the Park&quot; Webapp!</h2>
+		<h4>Basic Instructions:</h4>
+		<ol>
+			<li>Select desired date by clicking "Change Date..." from the menu (current date is default). Please Note: Schedules are subject to change due to weather or other circumstances.</li>
+			<li>Click "Print..." and ensure margins are set to "default," or, .25 inches. Document is designed for standard letter-sized paper. Select your printer and click print.</li>
+			<li>Enjoy your visit! Copies are also available on request at our main visitor center in historic Faneuil Hall.</li>
+		</ol>
+		<h4 style="font-style:italic;">A mobile version of this schedule is available in our FREE app, as well as on a mobile-optimized webpage. Visit <a href="http://go.nps.gov/boston">go.nps.gov/boston</a></h4>
+		<p>Boston National Historical Park is a unique collaboration of federally, municipally, and privately owned and operated historic sites associated with the colonial struggle for independence and the birth and growth of the nation. These nationally significant attractions include the Old South Meeting House, the Old State House, Faneuil Hall, the Old North Church, the Paul Revere House, the Bunker Hill Monument, the Bunker Hill Museum, Dorchester Heights, and the Charlestown Navy Yard including USS Constitution, the USS Constitution Museum, and USS Cassin Young. Every site along Boston’s Freedom Trail® is featured.</p>
+		<p>Boston African American National Historic Site is comprised of the largest area of pre-Civil War black owned structures in the U.S. It has roughly two dozen sites on the north face of Beacon Hill. These historic buildings were homes, businesses, schools, and churches of a thriving black community that, in the face of great opposition, fought the forces of slavery and inequality.</p>
+		<p>This webapp provides a centralized schedule of all talks, tours, events, exhibits, and activities across all park sites and park partners. It enables both staff and the general public to print a daily &quot;Today at the Park&quot; publication dynamically and on-demand, streamlining resources and minimizing waste.</p>
+	</div>
+	<div id="navbar" class="dontprint">
+		<span class="navbutton noMobile" onclick="$('#about').dialog('open');"><span class="ui-icon ui-icon-help" style="display:inline-block"></span>About...</span>
+		<span class="navbutton" id="changeDate"><span class="ui-icon ui-icon-calendar" style="display:inline-block"></span>Change Date...</span>
+		<span class="navbutton noMobile" id="printDialog"><span class="ui-icon ui-icon-print" style="display:inline-block"></span>Print...</span>
+	</div>
+  <div id="dateDialogContainer" title="Change Date"><div id="todaysDate" class="siteInfo dontprint noMobile"></div><div id="currentDateViewed" class="siteInfo dontprint noMobile"></div><div id="setDate" onchange="$('#currentDateViewed').html('<i>Date Displayed</i>: ' + verboseDate(new Date($('#setDate').val())));resetDate();"class="dontprint"></div></div>
+	<div id="frontPage" class="page">
+	<div class="loader dontprint"><div style="width:100%;padding-top:48%;"><img src="gif-load.gif"></div></div>
+		<table id="frontHeader" class="header" style="width:100%; height:.75in;"><tr><td style="vertical-align:top; width:60%;">Boston's Trails to Freedom</td><td style="font-size:7pt;"><span class="noMobile">National Park Service<br>U.S. Department of the Interior<br><br>Boston National Historical Park<br>Boston African American National Historic Site</span><img src="AH_large_BW_b.jpg" id="a-head" alt="National Park Service Arrowhead"></td></tr></table>
+		<table id="frontSubheader" class="subheader" style="width:100%; padding:.0125in .075in .0125in .075in;"><tr><td style="text-align:left;max-width:50%;"><div style="text-align:center; float:left;"><img src="fypht.jpg" style="max-height:1.25em;max-width:100%"></div></td><td style="text-align:right;"><div class="dateheader"></div></td></tr></table>
+			
+		<div id='frontSites' class="frontColumn1">
+			<span class="starRule"></span>
+			<span class="infoBlock">
+				<span class="siteInfo twoCol">Museum of African American History & The African Meeting House<span class="siteInfoBody">46 Joy St. | 617-725-0022<br><a href="http://www.maah.org" target="_blank">www.maah.org</a> | <a href="http://www.nps.gov/boaf" target="_blank">www.nps.gov/boaf</a></span></span><span class="siteColLeft"><img src='icons/AMH.png'></span><span class="siteColRight siteInfo" id="AMH"></span>
+			</span>
+			<span class="starRule"></span>
+			<span class="infoBlock">
+				<span class="siteInfo twoCol">Old South Meeting House</span><span class="siteColLeft"><img src='icons/OSMH.png'></span><span class="siteColRight siteInfoBody">310 Washington St.<br>617-482-6439<br><a href="http://www.osmh.org" target="_blank">www.osmh.org</a><span id="OSMH" class="siteInfo"></span></span>
+			</span>
+			<span class="starRule"></span>
+			<span class="infoBlock">
+				<span class="siteInfo twoCol">Old State House</span><span class="siteColLeft"><img src='icons/OSH.png'></span><span class="siteColRight siteInfoBody">206 Washington St.<br>617-720-1713<br><a href="http://www.revolutionaryboston.org" target="_blank" style="font-size:7pt">www.revolutionaryboston.org</a><span id="OSH"  class="siteInfo"></span></span>
+			</span>
+			<span class="starRule"></span>
+			<span class="infoBlock">
+				<span class="siteInfo twoCol">Faneuil Hall</span><span class="siteColLeft"><img src='icons/FH.png'></span><span class="siteColRight siteInfoBody">1 Faneuil Hall Sq.<br>617-242-5642<br><a href="http://go.nps.gov/fh" target="_blank">go.nps.gov/fh</a><span id="FHVC" class="siteInfo"></span><br><span class="siteInfo">The Great Hall:<span id="FHGH"  class="siteInfo"></span></span></span>
+			</span>
+			<span class="starRule"></span>
+			<span class="infoBlock">
+					<span class="siteInfo twoCol">Paul Revere House</span><span class="siteColLeft"><img src='icons/PRH.png' style="max-width:50%"></span><span class="siteColRight siteInfoBody">19 North Sq.<br>617-523-2338<br><a href="http://www.paulreverehouse.org" target="_blank" style="font-size:7pt">www.paulreverehouse.org</a><span id="PRH" class="siteInfo"></span></span>
+			</span>
+			<span class="starRule"></span>
+			<span class="infoBlock">
+					<span class="siteInfo twoCol">Old North Church</span><span class="siteColLeft" style="position:relative;top:-28pt"><img src='icons/ONC.png'></span><span class="siteColRight siteInfoBody" style="vertical-align:top;">195 Salem St.<br>617-523-6676<br><a href="http://www.oldnorth.com" target="_blank">www.oldnorth.com</a><span id="ONC" class="siteInfo"></span></span>
+			</span>
+			<span class="starRule"></span>
+		</div>
+		<div class="frontColumn2"><div id="FTNE_events_left"></div></div>
+		<div class="frontColumn3"><div id="FTNE_events_right"></div></div>
+	</div>
+	<div id="backPage" class="page">
+		<div class="loader dontprint"><div style="width:100%;padding-top:48%;"><img src="gif-load.gif"></div></div>
+		<table id="backSubheader" class="subheader noMobile" style="width:100%; padding:.075in .075in .025in .075in; margin-bottom:.1in; border-style:none none solid none;"><tr><td style="text-align:left;"><img src="fypht.jpg" style="height:1.25em;"></td><td style="text-align:right;"><div class="dateheader"></div></td></tr></table>
+			<div class="noMobile" id="overflow" style="height:1.5in;width:100%;text-align:center;">
+				<span id="overflow_A" style="width:49%;background-color:#d5d5d5;text-align:center;vertical-align:top;height:100%"></span>
+				<span id="overflow_B" style="width:49%;background-color:#d5d5d5;text-align:center;vertical-align:top;height:100%"></span>
+			</div>
+		<div class="siteListHeader">Freedom Trail<sup>&#174;</sup>: North End</div>
+		<div>
+		</div>
+		<div class="siteListHeader">Freedom Trail<sup>&#174;</sup>: Charlestown</div>
+		<div>
+			<span class="infoBlock" id="FTC_info" style="width:33%;vertical-align:top;height:6in;">
+					<table><tr>
+						<td class="siteListSubHeader">Bunker Hill</td>
+					</tr><tr>
+						<td>
+							<table style="width:100%"><tr><td style="text-align:center"><img src="BH.jpg" style="width:.5in" alt="Bunker Hill Monument - The Museum is accessible."></td><td class="siteInfo">Bunker Hill Monument<div class="siteInfoBody">617-242-5641 | <a href="http://go.nps.gov/bh" target="_blank">go.nps.gov/bh</a></div><div id="BH"></div><br>Bunker Hill Museum<div class="siteInfoBody">43 Monument Sq. - <img src="wheelchair_picto.jpg" style="display:inline-block; height:14pt; vertical-align:middle" alt="Wheelchair accessible."><br>617-242-7275</div><div id="BHM"></div></td></tr></table>
+						</td>
+					</tr><tr>
+						<td class="siteListSubHeader">Charlestown Navy Yard</td>
+					</tr><tr>
+						<td>
+							<table><tr><td style="vertical-align:top"><img src="CNYShips.jpg" style="width:1in; vertical-align:top" alt="USS CONSTITUTION and USS CASSIN YOUNG"></td><td class="siteInfo">USS <i>Constitution</i><div class="siteInfoBody"><a href="http://www.navy.mil/local/constitution/" target="_blank" style="font-size:6pt">http://www.navy.mil/local/constitution/</a></div><div id="USSC"></div><br>USS <i>Cassin Young</i><div id="USSCY"></div></td></tr></table>
+						</td>
+					</tr><tr>
+						<td class="siteInfo" style="padding-top:.15in;"><span style="display:inline-block;width:50%;float:left">USS Constitution Museum<div class="siteInfoBody">Building 22 - <img src="wheelchair_picto.jpg" style="display:inline-block; height:14pt; vertical-align:middle" alt="Wheelchair accessible."><br>617-426-1812<br><a href="http://www.ussconstitutionmuseum.org" target="_blank" style="font-size:6pt">www.ussconstitutionmuseum.org</a></div><div id="USSCM"></div><div class="siteInfoBody"></div></span><span style="display:inline-block;width:50%;float:right">Charlestown Navy Yard Visitor Center<div class="siteInfoBody">Building 5 - <img src="wheelchair_picto.jpg" style="display:inline-block; height:14pt; vertical-align:middle" alt="Wheelchair accessible."><br>617-242-5601<br><a href="http://go.nps.gov/cny" target="_blank">go.nps.gov/cny</a></div><div id="CNYVC"></div></span></td>
+					</tr><tr style="visibility:hidden;">
+						<td class="siteInfo" style="padding-top:.15in;"><span style="display:inline-block;width:50%;float:left">Gate 1 Pop-up Museum Store<div class="siteInfoBody">Gate 1 - <img src="wheelchair_picto.jpg" style="display:inline-block; height:14pt; vertical-align:middle" alt="Wheelchair accessible."></div><div id="Gate1"></div></span><span style="display:inline-block;width:50%;float:right">DECCA Shipyard Galley<div class="siteInfoBody">Building 10 - <img src="wheelchair_picto.jpg" style="display:inline-block; height:14pt; vertical-align:middle" alt="Wheelchair accessible."></div><div id="DECCA"></div></span></td>
+					</tr></table>
+			</span>
+			<span class="eventsBlock" style="width:66%;">
+				<span id="FTC_events_left" class="events" style="width:50%;vertical-align:top;"></span><span id="FTC_events_right" class="events" style="width:50%;vertical-align:top;"></span>
+			</span>
+		</div>
+
+	</div>
+	<div id="overflowbar" class="dontprint events">
+	</div>
+	</body>
+</html>

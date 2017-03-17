@@ -1,0 +1,276 @@
+body
+{
+	margin:0px;
+	padding:0px;
+	background: #f4efdd;
+	max-width:100%;
+}
+
+.page
+{
+	visibility:hidden;
+}
+.page *
+{
+	visibility:visible;
+}
+
+.events
+{
+	display:block;
+	width:95% !important;
+	margin-left:2.5% !important;
+	margin-right:2.5% !important;
+}
+
+.eventsBlock
+{
+	display:block;
+	width:100% !important;
+	max-width:768px !important;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.infoBlock
+{
+	display:block;
+	width:100% !important;
+	height:inherit !important;
+}
+.infoBlock > table
+{
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.header
+{
+	background-color:black;
+	color:white;
+	font-family:Verdana;
+	font-weight:bold;
+	font-size:1em;
+	padding-left:.125in;
+	padding-right:.125in;
+	padding-top:.1in;
+	padding-bottom:.1in;
+}
+
+.subheader
+{
+	background-color:white;
+	color:black;
+	font-family:Verdana;
+	font-weight:bold;
+	font-size:1em;
+	padding-left:.125in;
+	padding-right:.125in;
+	padding-top:.1in;
+	padding-bottom:.1in;
+}
+
+.noMobile
+{
+	display:none !important;
+}
+
+span
+{
+	display:inline-block;
+	vertical-align:top:
+}
+#a-head
+{
+	float:right;
+	height:.7in;
+	}
+
+.eventHeader
+{
+	color:black;
+	text-align:left;
+	font-family:Verdana;
+	font-weight:bold;
+	font-size:.875em;
+	padding-top:10px;
+}
+
+.subEventHeader
+{
+	color:black;
+	text-align:left;
+	font-family:Verdana;
+	font-weight:bold;
+	font-size:.75em;
+	padding-top:1px;
+	padding-bottom:1px;
+	margin-left:12%;
+}
+
+.eventBody
+{
+	color:black;
+	text-align:justify;
+	font-family:Verdana;
+	font-weight:normal;
+	font-size:.75em;
+	padding-top:0px;
+	padding-bottom:2px;
+	margin-left:12%;
+}
+
+.siteListHeader
+{
+	border-bottom:3px solid black;
+	width:100%;
+	font-family:Verdana;
+	font-size:1em;
+	font-weight:bold;
+	font-style:italic;
+	padding-top:25px;
+}
+
+.siteListSubHeader
+{
+	border-bottom:1.5px solid black;
+	width:100%;
+	font-family:Verdana;
+	font-size:1em;
+	font-weight:400;
+	font-style:italic;
+	padding-top:5px;
+}
+
+.siteInfo
+{
+	font-family:Verdana;
+	font-size:.875em;
+	font-weight:bold;
+	text-align:center;
+	padding:4px;
+	line-height:110%;
+	vertical-align:middle;
+}
+
+.siteInfoBody
+{
+	font-family:Verdana;
+	font-size:.75em;
+	font-weight:normal;
+	vertical-align:middle;
+}
+
+sup
+{
+	color:black;
+	font-family:Verdana;
+	font-weight:normal;
+	font-size:4pt;
+}
+
+u
+{
+	line-height:10pt;
+}
+
+a:link
+{
+	color:black;
+	line-height:10pt;
+}
+
+a:visited
+{
+	color:black;
+	line-height:10pt;
+}
+a
+{
+	font-size:inherit !important;
+	text-overflow:ellipsis;
+}
+
+hr{
+	height:1px;
+	border:none;
+	color:#000000;
+	background-color:#000000;
+    margin-top: .25em;
+    margin-bottom: .25em;
+}
+#navbar{
+	border-top: 2px solid rgba(37, 37, 37, 0.31);
+	border-left: 2px solid rgba(37, 37, 37, 0.31);
+	border-right: 0px solid black;
+	border-bottom: 0px solid black;
+	border-radius:5px;
+	box-shadow: rgba(37, 37, 37, 0.31) 4px 3px 4px;
+	position:fixed;
+	bottom:0px;
+	left:0px;
+	padding:.25em;
+	background-color:#E4E2DD;
+	color:black;
+	text-align:center;
+	z-index:99;
+}
+
+.navbutton{
+	padding: 0px;
+	margin: 0px;
+	cursor: pointer;
+	font-family: sans-serif;
+	font-weight: bold;
+	display:block;
+	border-style: groove;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-top: .25em;
+	padding-bottom: .25em;
+	width:10em;
+	overflow:hidden;
+}
+
+.navbutton:hover{
+	background-color:#b28000;
+	box-shadow: none;
+/*	border-top: 2px solid #b28000;
+	border-left: 2px solid #b28000;
+	border-right: 0px solid #b28000;
+	border-bottom: 0px solid #b28000;*/
+}
+#dateDialogContainer{
+	display:none;
+	margin-right:auto;
+	margin-left:auto;
+	text-align:center;
+	padding:0px;
+	border-top: 2px solid rgba(37, 37, 37, 0.31);
+	border-left: 2px solid rgba(37, 37, 37, 0.31);
+	border-right: 0px solid black;
+	border-bottom: 0px solid black;
+	box-shadow: rgba(37, 37, 37, 0.31) 4px 3px 4px;
+	border-radius: 5px;
+	margin-top:5px;
+}
+
+.ui-dialog,.ui-dialog,.ui-widget, .ui-widget-content, .ui-corner-all, .foo, .ui-draggable, .ui-resizable {
+background:#E4E2DD;
+}
+
+.loader{
+	position:fixed;
+	height:100%;
+	width:100%;
+	z-index:98;
+	background:white;
+	vertical-align:middle;
+	text-align:center;
+	border-style:none;
+	border-width:0px;
+	margin-left: auto;
+	margin-right: auto;
+}
