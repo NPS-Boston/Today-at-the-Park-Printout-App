@@ -25,7 +25,7 @@
 	text-align: center;
   }
   .siteColLeft img {
-	max-width:100%;
+	max-width:95%;
   }
   .siteColRight
   {
@@ -35,6 +35,7 @@
   .twoCol
   {
 	width:100%;
+	box-sizing:border-box;
   }
   span.starRule {
 	width: 90%;
@@ -55,12 +56,36 @@
     top: -8pt;
     font-size: 12pt;
 }
+
+  span.starSubRule {
+    width: 33%;
+    transform: translateX(100%);
+    border-right: .3in solid black;
+    border-left: .3in solid black;
+    height: 1px;
+    box-sizing: border-box;
+    text-align: center;
+    margin-top: .125in;
+  }
+  span.starSubRule:after {
+    content: "\2605";
+    height: .5em;
+    position: relative;
+    top: -8pt;
+    font-size: 8pt;
+}
+
+
 .frontColumn1 {
 height:9.5in;
 width:33%;
 position:relative;
 top:0;
 left:0;
+background: rgba(128, 128, 128, 0.15);
+padding: 4px;
+box-sizing: border-box;
+margin-top:.125in;
 }
 .frontColumn2 {
 height:9.5in;
@@ -509,7 +534,7 @@ function postEvents(neighborhood,hoodArray,splitThreshold)
   <div id="dateDialogContainer" title="Change Date"><div id="todaysDate" class="siteInfo dontprint noMobile"></div><div id="currentDateViewed" class="siteInfo dontprint noMobile"></div><div id="setDate" onchange="$('#currentDateViewed').html('<i>Date Displayed</i>: ' + verboseDate(new Date($('#setDate').val())));resetDate();"class="dontprint"></div></div>
 	<div id="frontPage" class="page">
 	<div class="loader dontprint"><div style="width:100%;padding-top:48%;"><img src="gif-load.gif"></div></div>
-		<table id="frontHeader" class="header" style="width:100%; height:.75in;"><tr><td style="vertical-align:top; width:60%;">Boston's Trails to Freedom</td><td style="font-size:7pt;"><span class="noMobile">National Park Service<br>U.S. Department of the Interior<br><br>Boston National Historical Park<br>Boston African American National Historic Site</span><img src="AH_large_BW_b.jpg" id="a-head" alt="National Park Service Arrowhead"></td></tr></table>
+		<table id="frontHeader" class="header" style="width:100%; height:.75in;"><tr><td style="vertical-align:top; width:60%;">National Parks of Boston</td><td style="font-size:7pt;"><span class="noMobile">National Park Service<br>U.S. Department of the Interior<br><br>Boston National Historical Park<br>Boston African American National Historic Site</span><img src="AH_large_BW_b.jpg" id="a-head" alt="National Park Service Arrowhead"></td></tr></table>
 		<table id="frontSubheader" class="subheader" style="width:100%; padding:.0125in .075in .0125in .075in;"><tr><td style="text-align:left;max-width:50%;"><div style="text-align:center; float:left;"><img src="fypht.jpg" style="max-height:1.25em;max-width:100%"></div></td><td style="text-align:right;"><div class="dateheader"></div></td></tr></table>
 			
 		<div id='frontSites' class="frontColumn1">
@@ -534,10 +559,10 @@ function postEvents(neighborhood,hoodArray,splitThreshold)
 					<span class="siteInfo twoCol">Paul Revere House</span><span class="siteColLeft"><img src='icons/PRH.png' style="max-width:50%"></span><span class="siteColRight siteInfoBody">19 North Sq.<br>617-523-2338<br><a href="http://www.paulreverehouse.org" target="_blank" style="font-size:7pt">www.paulreverehouse.org</a><span id="PRH" class="siteInfo"></span></span>
 			</span>
 			<span class="starRule"></span>
-			<span class="infoBlock">
-					<span class="siteInfo twoCol">Old North Church</span><span class="siteColLeft" style="position:relative;top:-28pt"><img src='icons/ONC.png'></span><span class="siteColRight siteInfoBody" style="vertical-align:top;">195 Salem St.<br>617-523-6676<br><a href="http://www.oldnorth.com" target="_blank">www.oldnorth.com</a><span id="ONC" class="siteInfo"></span></span>
+			<span class="infoBlock" style="position:relative;top:-28pt">
+					<span class="siteInfo twoCol" style="position:relative;top:28pt">Old North Church</span><span class="siteColLeft"><img src='icons/ONC.png'></span><span class="siteColRight siteInfoBody" style="position:relative;top:12pt">195 Salem St.<br>617-523-6676<br><a href="http://www.oldnorth.com" target="_blank">www.oldnorth.com</a><span id="ONC" class="siteInfo"></span></span>
 			</span>
-			<span class="starRule"></span>
+			<span class="starRule" style="position:relative;top:-28pt"></span>
 		</div>
 		<div class="frontColumn2"><div id="FTNE_events_left"></div></div>
 		<div class="frontColumn3"><div id="FTNE_events_right"></div></div>
@@ -545,38 +570,38 @@ function postEvents(neighborhood,hoodArray,splitThreshold)
 	<div id="backPage" class="page">
 		<div class="loader dontprint"><div style="width:100%;padding-top:48%;"><img src="gif-load.gif"></div></div>
 		<table id="backSubheader" class="subheader noMobile" style="width:100%; padding:.075in .075in .025in .075in; margin-bottom:.1in; border-style:none none solid none;"><tr><td style="text-align:left;"><img src="fypht.jpg" style="height:1.25em;"></td><td style="text-align:right;"><div class="dateheader"></div></td></tr></table>
-			<div class="noMobile" id="overflow" style="height:1.5in;width:100%;text-align:center;">
-				<span id="overflow_A" style="width:49%;background-color:#d5d5d5;text-align:center;vertical-align:top;height:100%"></span>
-				<span id="overflow_B" style="width:49%;background-color:#d5d5d5;text-align:center;vertical-align:top;height:100%"></span>
-			</div>
-		<div class="siteListHeader">Freedom Trail<sup>&#174;</sup>: North End</div>
-		<div>
-		</div>
-		<div class="siteListHeader">Freedom Trail<sup>&#174;</sup>: Charlestown</div>
-		<div>
-			<span class="infoBlock" id="FTC_info" style="width:33%;vertical-align:top;height:6in;">
-					<table><tr>
-						<td class="siteListSubHeader">Bunker Hill</td>
-					</tr><tr>
-						<td>
-							<table style="width:100%"><tr><td style="text-align:center"><img src="BH.jpg" style="width:.5in" alt="Bunker Hill Monument - The Museum is accessible."></td><td class="siteInfo">Bunker Hill Monument<div class="siteInfoBody">617-242-5641 | <a href="http://go.nps.gov/bh" target="_blank">go.nps.gov/bh</a></div><div id="BH"></div><br>Bunker Hill Museum<div class="siteInfoBody">43 Monument Sq. - <img src="wheelchair_picto.jpg" style="display:inline-block; height:14pt; vertical-align:middle" alt="Wheelchair accessible."><br>617-242-7275</div><div id="BHM"></div></td></tr></table>
-						</td>
-					</tr><tr>
-						<td class="siteListSubHeader">Charlestown Navy Yard</td>
-					</tr><tr>
-						<td>
-							<table><tr><td style="vertical-align:top"><img src="CNYShips.jpg" style="width:1in; vertical-align:top" alt="USS CONSTITUTION and USS CASSIN YOUNG"></td><td class="siteInfo">USS <i>Constitution</i><div class="siteInfoBody"><a href="http://www.navy.mil/local/constitution/" target="_blank" style="font-size:6pt">http://www.navy.mil/local/constitution/</a></div><div id="USSC"></div><br>USS <i>Cassin Young</i><div id="USSCY"></div></td></tr></table>
-						</td>
-					</tr><tr>
-						<td class="siteInfo" style="padding-top:.15in;"><span style="display:inline-block;width:50%;float:left">USS Constitution Museum<div class="siteInfoBody">Building 22 - <img src="wheelchair_picto.jpg" style="display:inline-block; height:14pt; vertical-align:middle" alt="Wheelchair accessible."><br>617-426-1812<br><a href="http://www.ussconstitutionmuseum.org" target="_blank" style="font-size:6pt">www.ussconstitutionmuseum.org</a></div><div id="USSCM"></div><div class="siteInfoBody"></div></span><span style="display:inline-block;width:50%;float:right">Charlestown Navy Yard Visitor Center<div class="siteInfoBody">Building 5 - <img src="wheelchair_picto.jpg" style="display:inline-block; height:14pt; vertical-align:middle" alt="Wheelchair accessible."><br>617-242-5601<br><a href="http://go.nps.gov/cny" target="_blank">go.nps.gov/cny</a></div><div id="CNYVC"></div></span></td>
-					</tr><tr style="visibility:hidden;">
-						<td class="siteInfo" style="padding-top:.15in;"><span style="display:inline-block;width:50%;float:left">Gate 1 Pop-up Museum Store<div class="siteInfoBody">Gate 1 - <img src="wheelchair_picto.jpg" style="display:inline-block; height:14pt; vertical-align:middle" alt="Wheelchair accessible."></div><div id="Gate1"></div></span><span style="display:inline-block;width:50%;float:right">DECCA Shipyard Galley<div class="siteInfoBody">Building 10 - <img src="wheelchair_picto.jpg" style="display:inline-block; height:14pt; vertical-align:middle" alt="Wheelchair accessible."></div><div id="DECCA"></div></span></td>
-					</tr></table>
+		<div id='backSites' class="frontColumn1">
+			<span class="starRule"></span>
+			<span class="infoBlock">
+				<span class="siteInfo twoCol">Bunker Hill</span>
+				<span class="siteColLeft"><img src='icons/BH.png' style="max-width:60%"></span><span class="siteColRight siteInfoBody"><span class="siteInfo">Bunker Hill Monument</span><br>0 Monument Sq.<br><a href="http://go.nps.gov/bh" target="_blank">go.nps.gov/bh</a><br><span id="BH" class="siteInfo"></span><br><span class="siteInfo">Bunker Hill Museum:</span><br>43 Monument Sq.<br>617-242-7275<span id="BHM"  class="siteInfo"></span></span></span>
 			</span>
-			<span class="eventsBlock" style="width:66%;">
-				<span id="FTC_events_left" class="events" style="width:50%;vertical-align:top;"></span><span id="FTC_events_right" class="events" style="width:50%;vertical-align:top;"></span>
+			<span class="starRule"></span>
+			<span class="infoBlock">
+				<span class="siteInfo twoCol">Charlestown Navy Yard</span>
+					<span class='siteInfo twoCol'>
+							Visitor Center<br><span class="siteInfoBody">Building 5<br>617-242-5601<br><a href="http://go.nps.gov/cny" target="_blank">go.nps.gov/cny</a><br></span><br><span id="CNYVC" class="siteInfo"></span>
+					</span>
+					<span class="starSubRule"></span>
+					<span class="twoCol" style="text-align:center;"><img src='icons/USSC.png' style="max-width:45%"></span>
+					<span class="twoCol siteInfo">USS <em>Constitution</em>
+						<span class="siteInfoBody"><a href="http://www.navy.mil/local/constitution/" target="_blank" style="font-size:6pt">http://www.navy.mil/local/constitution/</a><span id="USSC" class="siteInfo"></span>
+						</span>
+					</span>
+					<span class="twoCol siteInfo">USS Constitution Museum<br>
+						<span class="siteInfoBody">Building 22<br>617-426-1812<br><a href="http://www.ussconstitutionmuseum.org" target="_blank" style="font-size:6pt">www.ussconstitutionmuseum.org</a><span id="USSCM" class="siteInfo"></span>
+						</span>
+					</span>
+					<span class="starSubRule"></span>
+					<br>
+					<span class="siteColLeft" style="width:45%"><img src="icons/USSCY.png" style="max-width:110%"></span>
+					<span class="siteColRight siteInfo" style="width:50%">USS <em>Cassin Young</em><br><span class="siteInfoBody">Pier 1</span><br><span id="USSCY" class="siteInfo"></span></span>
 			</span>
+			<span class="starRule"></span>
 		</div>
+		<div class="frontColumn2"><div id="FTC_events_left"></div></div>
+		<div class="frontColumn3"><div id="FTC_events_right"></div></div>
+	</div>
 
 	</div>
 	<div id="overflowbar" class="dontprint events">
