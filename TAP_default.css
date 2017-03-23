@@ -105,14 +105,16 @@ span
 	vertical-align:top;
 	text-align:center;
 	letter-spacing:-1px;
-  width:.575in !important;
+  /*width:.575in !important;*/
   margin-left:.025in;
   margin-right:.025in;
 }
 
 .eventData
 {
-	width:75%;
+	/*width:75%;*/
+	width:90%;
+	margin-left:5%;
 	padding-bottom:.0625in;
 }
 
@@ -124,6 +126,7 @@ span
 	font-weight:bold;
 	font-size:9pt;
 	padding-top:1px;
+	width:100%;
 }
 
 .subEventHeader
@@ -344,4 +347,29 @@ background:#E4E2DD;
 	height: 11in;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+
+@media print{
+.dontprint
+{
+	display:none;
+}
+.page
+{
+	-webkit-print-color-adjust:exact;
+	border-style:none;
+	border-width:0px;
+	width:8.5in;
+	height:11in;
+	margin:0in;
+	/*padding:none;*/
+	/*page-break-inside:avoid;*/
+}
+@page {
+	size: letter portrait;
+	margin:0in;
+	padding: none;
+}
+
 }
