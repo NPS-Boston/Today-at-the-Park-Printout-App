@@ -1,180 +1,45 @@
 ﻿<!DOCTYPE html>
 <html>
-  <head id="pageHead">
-  <meta name="google-site-verification" content="15x3hoylrOQ-sVCGrBMR0McOG03_nl_XP-XMFrFk6h4" />
-<title>Printable &quot;Today at the Park&quot; for the Freedom Trail and Black Heritage Trail - go.nps.gov/todayinboston</title>
+<head id="pageHead">
+<meta name="google-site-verification" content="15x3hoylrOQ-sVCGrBMR0McOG03_nl_XP-XMFrFk6h4" />
+<title>Printable &quot;Today at the Park&quot; for the Freedom Trail and Black Heritage Trail - www.bostonnpsevents.com</title>
 <meta name="description" content="Get daily tour, talk, exhibit, and event schedules for the Freedom Trail and Black Heritage Trail.">
-<meta name="author" content="National Park Service - Boston National Historical Park">
+<meta name="author" content="National Parks of Boston">
 <META NAME="ROBOTS" CONTENT="INDEX, FOLLOW">
 <meta charset="UTF-8">
 <meta id="viewport" name=viewport content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <link rel="stylesheet" href="jquery-ui.css">
-  <link id="TAP_Default" rel="stylesheet" type="text/css" href="TAP_default.css">
-  
-  <style>
-  li {
-	display:block;
-  }
-  .infoBlock {
-  /*border-bottom: 1.5px solid black;*/
-  }
-  .siteColLeft {
-	width:33%;
-	vertical-align:middle;
-	box-sizing: border-box;
-	text-align: center;
-  }
-  .siteColLeft img {
-	max-width:85%;
-  }
-  .siteColRight
-  {
-	width:66%;
-	box-sizing: border-box;
-  }
-  .twoCol
-  {
-	width:100%;
-	box-sizing:border-box;
-  }
-  span.starRule {
-	width: 90%;
-    margin-left: 5%;
-    border-right: 1in solid black;
-    border-left: 1in solid black;
-    height: 1px;
-    box-sizing: border-box;
-    text-align: center;
-	position: relative;
-    top: .125in;
-    margin-top: .0625in;
-  }
-  span.starRule:after {
-    content: "\2605";
-    height: .5em;
-    position: relative;
-    top: -8pt;
-    font-size: 12pt;
-}
-
-  span.starSubRule {
-    width: 33%;
-    transform: translateX(100%);
-    border-right: .3in solid black;
-    border-left: .3in solid black;
-    height: 1px;
-    box-sizing: border-box;
-    text-align: center;
-    margin-top: .125in;
-  }
-  span.starSubRule:after {
-    content: "\2605";
-    height: .5em;
-    position: relative;
-    top: -8pt;
-    font-size: 8pt;
-}
-
-.column {
-width:33%;
-vertical-align:top;
-}
-.front {
-height:9.25in;
-}
-
-.back {
-height:9.75in;
-}
-
-.siteColumn {
-background: rgba(128, 128, 128, 0.15);
-padding-left: 4px;
-padding-right: 4px;
-box-sizing: border-box;
-margin-top:.125in;
-}
-  </style>
-	<script type="text/javascript" src="jquery-1.10.2.min.js"></script>
-	<script type="text/javascript" src="jquery-ui.min.js"></script>
-	<script type="text/javascript">
-	 function isMobile(){
-if($(window).width() <= 768)
-{return true;}
-else{return false;}
-
-}
-$(document).ready(function() {
-	if(!isMobile()){
-		
-			$( "#dateDialogContainer" ).dialog({
-		autoOpen: false,
-		show: {
-			effect: "blind",
-			duration: 500
-		},
-		position: {
-			my: "left top",
-			at: "right center",
-			of: $("#changeDate")
-		},
-		width: "auto",
-		resizable: false,
-		draggable: false
-	});
-	}
-	else{
-		$( "#dateDialogContainer" ).dialog({
-		autoOpen: false,
-		show: {
-			effect: "blind",
-			duration: 500
-		},
-		position: {
-			my: "left bottom",
-			at: "left top",
-			of: $("#changeDate")
-		},
-		width: "auto",
-		resizable: false,
-		draggable: false
-	});
-	}
-	$( "#setDate" ).datepicker();
-	$('#about').dialog({ autoOpen: false, maxHeight: 600, minWidth: 600 });
-	$( ".ui-datepicker-inline" ).css({background:"white"});
-
-	
-	
-	$("#dateDialogContainer").parent().css({position:"fixed"});
-	$( "#changeDate" ).click(function(event) {
-		$( "#dateDialogContainer" ).dialog( "open" );
-		event.stopPropagation();
-	});
-	$("#todaysDate").html("<i>Today&apos;s Date</i>: " + verboseDate(new Date()));
-	$("#currentDateViewed").html("<i>Date Displayed</i>: " + verboseDate(theUTCDate));
-	$('.page').click(function() {
-		$( "#dateDialogContainer" ).dialog( "close" );
-	});
-	$("#printDialog").click(function() {
-			$( "#dateDialogContainer" ).dialog( "close" );
-			$( "#about" ).dialog( "close" );
-			window.print();
-		});
-});
-</script>
+<link rel="stylesheet" href="jquery-ui.min.css">
+<link rel="stylesheet" href="jquery-ui.structure.min.css">
+<link id="TAP_Default" rel="stylesheet" type="text/css" href="TAP_default.min.css">
+<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="jquery-ui.min.js"></script>
 <script type="text/javascript">
 	//setup commands.
 	var theDate;
 	var theUTCDate;
 	var TAPData;
-	var frontEvents;
-	var backEvents;
-	var OverflowEvents;
-
+	var areaEvents = function() {
+		this.AMH = {abbrs:["AMH"],abbr:"AMH",name:"Black Heritage Trail",events:[]};
+		this.OSMH = {abbrs:["OSMH"],abbr:"OSMH",name:"Old South Meeting House",events:[]};
+		this.OSH = {abbrs:["OSH"],abbr:"OSH",name:"Old State House",events:[]};
+		this.FH = {abbrs:["FHVC","FHGH"],abbr:"FH",name:"Faneuil Hall",events:[]};
+		this.PRH = {abbrs:["PRH"],abbr:"PRH",name:"Paul Revere House",events:[]};
+		this.ONC = {abbrs:["ONC"],abbr:"ONC",name:"Old North Church",events:[]};
+		this.BH = {abbrs:["BH","BHM"],abbr:"BH",name:"Bunker Hill",events:[]};
+		this.CNY = {abbrs:["CNYVC","USSCY","USSC","USSCM"],abbr:"CNY",name:"Charlestown Navy Yard",events:[]}
+	}
+	var front = new RegExp("AMH|OSMH|OSH|FH|PRH|ONC")
+	
+	var extraEvents = [
+	'<span class="siteInfo" class="extra_event" style="font-size:10pt;"><span style="text-align: left;"><img src="nps_boston.jpg" style="border-radius:10px;height:.625in;display:inline-block;margin:.0625in .125in .125in .0625in;float:left;">Get more with our FREE award-winning Freedom Trail<sup>®</sup> and Black Heritage Trail<sup>®</sup> app!</span><span style="font-size:10pt;padding-top:8pt;padding-bottom:8pt;font-style:italic;">Search "NPS Boston" in your app store or go to <a href="http://go.nps.gov/boston" target="_blank">go.nps.gov/boston</a></span><span style="height:.375in;"><img style="height:100%;display:inline-block;float:left;" src="android.png"><img style="height:100%;display:inline-block;float:right;" src="apple.png"></span></span>',
+	'<span class="siteInfo" class="extra_event"><img src="Junior_Ranger_grayscale_transparency.gif" style="height:1.25in;float:right;padding:3px;"><em><strong>Become a Junior Ranger!</strong></em><br>Kids of all ages are encouraged to Explore, Learn, and Protect at our National Parks in Boston. Ask a Park Ranger how to earn your Junior Ranger badge!</span>'
+	
+	]
+	
+	var eventsObj;
 	//DATE HANDLING FUNCTIONS
 
-	//Make date display in a pretty, verbose fasion.
+	//Make date display in a pretty, verbose fashion.
 	function verboseDate(date){
 		var monthsProper = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 		var daysProper = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -286,9 +151,16 @@ $(document).ready(function() {
 		}
 	}
 
-	function getHTML(eventObj, id)
+	function getHTML(eventObj, id, hoodArrayName, header)
 	{
-		return "<span id='" + id + "'><span class='eventData'><span class='eventHeader'>" + eventObj.title + "</span><span class='subEventHeader'>" + eventObj.formattedStartTime + eventObj.formattedEndTime +" - " + eventObj.location + "</span><span class='eventBody'>" + eventObj.content + "</span></span></span>";
+		header = header || "";
+		var html = "<span id='" + id + "'>" + header + "<span class='eventData'><span class='eventHeader'>" + eventObj.title + "</span><span class='subEventHeader'>" + eventObj.formattedStartTime + eventObj.formattedEndTime;
+		if(hoodArrayName.search(eventObj.location) == -1)
+		{
+			html += " - " + eventObj.location	
+		}
+		html += "</span><span class='eventBody'>" + eventObj.content + "</span></span></span>";
+		return html;
 	}
 
 
@@ -308,7 +180,7 @@ $(document).ready(function() {
 	$('.events').empty();
 
 	TAPData = (eval(data));
-
+console.log(TAPData)
 	//check if all sites are closed!
 	if('ALL_SITES_CLOSED' in TAPData)
 	{
@@ -320,16 +192,23 @@ $(document).ready(function() {
 	}
 	else
 	{
+		//first add hours/fees to sites. also create an events array under each site object.
+		for(var i = 0; i < TAPData.sites.length; i++)
+		{
+			var feeStr = '';
+			if(TAPData.sites[i].fees)
+			{
+				for(var j=0; j < TAPData.sites[i].fees.length; j++)
+				{
+					feeStr += TAPData.sites[i].fees[j] + "<br>";
+				}
+			}
+		$("#" + TAPData.sites[i].abbr).html('<span class="siteInfoBody">' + feeStr + '</span><br><span>' + TAPData.sites[i].hours + '</span>');
 		
-	frontEvents = new Array();
-	backEvents = new Array();
-
-	//append hours AND fees returned by API
-	for(var i = 0; i < TAPData.sites.length; i++)
-	{
-		$("#" + TAPData.sites[i].abbr).html('<span class="siteInfoBody">' + TAPData.sites[i].fees + '</span><span>' + TAPData.sites[i].hours + '</span>');
-	}
-	
+		TAPData.sites[i].events = [];
+		
+		}
+	//next associate events with sites, first match using keywords/locations wins. Append these into the respective site objects under the events array.
 	for(var j = 0; j < TAPData.events.length; j++)
 	{
 		loop1:
@@ -341,76 +220,101 @@ $(document).ready(function() {
 					//alert(TAPData.events[j].location + "    " + TAPData.sites[i].keywords[k]);
 					if(TAPData.events[j].location.search(TAPData.sites[i].keywords[k]) > -1)
 					{
-						switch(TAPData.sites[i].abbr)
-						{
-							case "AMH":
-							case "OSMH":
-							case "OSH":
-							case "FHVC":
-							case "FHGH":
-							case "PRH":
-							case "ONC":
-								frontEvents.push(TAPData.events[j]);
-								break;
-							case "USSC":
-							case "USSCM":
-							case "USSCY":
-							case "CNYVC":
-							case "BH":
-							case "BHM":
-								backEvents.push(TAPData.events[j]);
-								break;
-						}
+						TAPData.sites[i].events.push(TAPData.events[j]);
 						break loop1;
 					}
 				}
 			}
 	}
-	postEvents("front",frontEvents,0);
-	postEvents("back",backEvents,0);
-
+	
+	//lastly go through all sites and associate events at sites to events at areas/neighborhoods defined above in areaEvents constructor
+	eventsObj = new areaEvents();
+	for (var property in eventsObj)
+	{
+		if (eventsObj.hasOwnProperty(property))
+		{
+			for(var i = 0; i < TAPData.sites.length; i++)
+			{
+				for (var ab in eventsObj[property].abbrs)
+				{
+					//console.log(eventsObj[property].abbrs[ab])
+					if(eventsObj[property].abbrs[ab] == TAPData.sites[i].abbr)
+					{
+						//console.log(TAPData.sites[i].events)
+						eventsObj[property].events = eventsObj[property].events.concat(TAPData.sites[i].events)
+					}
+				}
+			}
+		
+			if (eventsObj[property].events.length > 0)
+			{
+				console.log(front.test(property))
+				if(front.test(property))
+				{
+					postEvents("front",eventsObj[property])
+				}
+				else
+				{
+					postEvents("back",eventsObj[property])
+				}
+			}
+		}
+	}
+	
+	//insert extra events/adverts, etc.
+	postExtraEvents(extraEvents)
+	
 	$(".dateheader").html(verboseDate(theUTCDate))
 	
 	drawPaper("show");
 }
 }
-function postEvents(neighborhood,hoodArray,splitThreshold)
+function postEvents(side,hoodArray)
 {
-	var heightMax = $('#' + neighborhood + "Column1").height();
+	var heightMax = $('#' + side + "Column1").height();
 	loopA:
-	for(var i = 0, il = hoodArray.length; i < il; i++)
+	for(var i = 0, il = hoodArray.events.length; i < il; i++)
 	{
-		var HTML = getHTML(hoodArray[i],"eventDiv_" + neighborhood + "_" + i);
-
-		$("#" + neighborhood + "_events_left").append($(HTML));
-
-		if($("#" + neighborhood + "_events_left").height()>heightMax)
+		var HTML = "";
+		if(i == 0)
 		{
-			$("#eventDiv_" + neighborhood + "_" + i).remove();
-			$("#" + neighborhood + "_events_right").append($(HTML));
-			if($("#" + neighborhood + "_events_right").height()>heightMax)
+			HTML = getHTML(hoodArray.events[i],"#eventDiv_" + side + "_" + hoodArray.abbr + "_" + i,hoodArray.name,"<span class='siteListSubHeader'>" + hoodArray.name + "</span>")
+		}
+		else
+		{
+			HTML = getHTML(hoodArray.events[i],"#eventDiv_" + side + "_" + hoodArray.abbr + "_" + i,hoodArray.name)
+		}
+
+		$("#" + side + "_events_left").append($(HTML));
+
+		if($("#" + side + "_events_left").height()>heightMax)
+		{
+			document.getElementById("#eventDiv_" + side + "_" + hoodArray.abbr + "_" + i).remove();
+			console.log("#eventDiv_" + side + "_" + hoodArray.abbr + "_" + i)
+			$("#" + side + "_events_right").append($(HTML));
+			if($("#" + side + "_events_right").height()>heightMax)
 			{
-				$("#eventDiv_" + neighborhood + "_" + i).remove();
+				document.getElementById("#eventDiv_" + side + "_" + hoodArray.abbr + "_" + i).remove();
 				/*
-				$("#" + neighborhood + "_events_left").empty();
-				$("#" + neighborhood + "_events_right").empty();
+				$("#" + side + "_events_left").empty();
+				$("#" + side + "_events_right").empty();
 				for(var i = 0, il = hoodArray.length; i < il; i++)
 				{
-					var HTML = getHTML(hoodArray[i],"eventDiv_" + neighborhood + "_" + i);
+					var HTML = getHTML(hoodArray[i],"eventDiv_" + side + "_" + i);
 					if(hoodArray[i].throwAway)
 					{	
 						$("#overflowbar").append($(HTML));
 					}
 					else
 					{
-						$("#" + neighborhood + "_events_left").append($(HTML));
-						if($("#" + neighborhood + "_events_left").height()>heightMax)
+						$("#" + side + "_events_left").append($(HTML));
+						if($("#" + side + "_events_left").height()>heightMax)
 						{
-							$("#eventDiv_" + neighborhood + "_" + i).remove();
-							$("#" + neighborhood + "_events_right").append($(HTML));
-							if($("#" + neighborhood + "_events_right").height()>heightMax)
+							$("#eventDiv_" + side + "_" + i).remove();
+							$("#" + side + "_events_right").append($(HTML));
+							if($("#" + side + "_events_right").height()>heightMax)
 							{
-								$("#eventDiv_" + neighborhood + "_" + i).remove();
+								$("#eventDiv_" + side + "_" + i).remove();
 								$("#overflowbar").append($(HTML));
 							}
 						}
@@ -418,6 +322,36 @@ function postEvents(neighborhood,hoodArray,splitThreshold)
 				}
 				break loopA;
 				*/
+			}
+		}
+	}
+}
+function postExtraEvents(HTML_array)
+{
+	var heightMax = $("#frontColumn1").height();
+	loopA:
+	for(var i = 0, il = HTML_array.length; i < il; i++)
+	{
+		HTML = $("<span class='extra_event' id='extraEvent_" + i + "'>" + HTML_array[i] + "</span>")
+		$("#front_events_left").append(HTML);
+
+		if($("#front_events_left").height()>heightMax)
+		{
+			document.getElementById("extraEvent_" + i).remove();
+			$("#front_events_right").append(HTML);
+			if($("#front_events_right").height()>heightMax)
+			{
+				document.getElementById("extraEvent_" + i).remove();
+				$("#back_events_left").append(HTML);
+				if($("#back_events_left").height()>heightMax)
+				{
+					document.getElementById("extraEvent_" + i).remove();
+					$("#back_events_right").append(HTML);
+					if($("#back_events_right").height()>heightMax)
+					{
+						document.getElementById("extraEvent_" + i).remove();
+					}
+				}
 			}
 		}
 	}
@@ -484,6 +418,7 @@ function postEvents(neighborhood,hoodArray,splitThreshold)
 	</div>
 	<div id="backPage" class="page">
 		<div class="loader dontprint"><div style="width:100%;padding-top:48%;"><img src="gif-load.gif"></div></div>
+		<table id="frontHeader" class="header" style="width:100%; height:.75in;"><tr><td style="vertical-align:top; width:60%;">National Parks of Boston</td><td style="font-size:7pt;"><span class="noMobile">National Park Service<br>U.S. Department of the Interior<br><br>Boston National Historical Park<br>Boston African American National Historic Site</span><img src="AH_large_BW_b.jpg" id="a-head" alt="National Park Service Arrowhead"></td></tr></table>
 		<table id="backSubheader" class="subheader noMobile" style="width:100%; padding:.075in .075in .025in .075in; margin-bottom:.1in; border-style:none none solid none;"><tr><td style="text-align:left;"><img src="fypht.jpg" style="height:1.25em;"></td><td style="text-align:right;"><div class="dateheader"></div></td></tr></table>
 		<table><tr><td id='backColumn1' class="back column siteColumn">
 			<span class="starRule"></span>
@@ -522,5 +457,45 @@ function postEvents(neighborhood,hoodArray,splitThreshold)
 	</div>
 	<div id="overflowbar" class="dontprint events">
 	</div>
+	<script type="text/javascript">
+$(document).ready(function() {
+	$( "#dateDialogContainer" ).dialog({
+		autoOpen: false,
+		show: {
+			effect: "blind",
+			duration: 500
+		},
+		position: {
+			my: "left top",
+			at: "right center",
+			of: $("#changeDate")
+		},
+		width: "auto",
+		resizable: false,
+		draggable: false
+	});
+	$( "#setDate" ).datepicker();
+	$('#about').dialog({ autoOpen: false, maxHeight: 600, minWidth: 600 });
+	$( ".ui-datepicker-inline" ).css({background:"white"});
+
+	
+	
+	$("#dateDialogContainer").parent().css({position:"fixed"});
+	$( "#changeDate" ).click(function(event) {
+		$( "#dateDialogContainer" ).dialog( "open" );
+		event.stopPropagation();
+	});
+	$("#todaysDate").html("<i>Today&apos;s Date</i>: " + verboseDate(new Date()));
+	$("#currentDateViewed").html("<i>Date Displayed</i>: " + verboseDate(theUTCDate));
+	$('.page').click(function() {
+		$( "#dateDialogContainer" ).dialog( "close" );
+	});
+	$("#printDialog").click(function() {
+			$( "#dateDialogContainer" ).dialog( "close" );
+			$( "#about" ).dialog( "close" );
+			window.print();
+		});
+});
+</script>
 	</body>
 </html>
