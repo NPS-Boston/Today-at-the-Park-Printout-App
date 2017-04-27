@@ -262,7 +262,7 @@ console.log(TAPData)
 	}
 	
 	//insert extra events/adverts, etc.
-	postExtraEvents(extraEvents)
+	postExtraEvents()
 	
 	$(".dateheader").html(verboseDate(theUTCDate))
 	
@@ -295,44 +295,18 @@ function postEvents(side,hoodArray)
 			if($("#" + side + "_events_right").height()>heightMax)
 			{
 				document.getElementById("#eventDiv_" + side + "_" + hoodArray.abbr + "_" + i).remove();
-				/*
-				$("#" + side + "_events_left").empty();
-				$("#" + side + "_events_right").empty();
-				for(var i = 0, il = hoodArray.length; i < il; i++)
-				{
-					var HTML = getHTML(hoodArray[i],"eventDiv_" + side + "_" + i);
-					if(hoodArray[i].throwAway)
-					{	
-						$("#overflowbar").append($(HTML));
-					}
-					else
-					{
-						$("#" + side + "_events_left").append($(HTML));
-						if($("#" + side + "_events_left").height()>heightMax)
-						{
-							$("#eventDiv_" + side + "_" + i).remove();
-							$("#" + side + "_events_right").append($(HTML));
-							if($("#" + side + "_events_right").height()>heightMax)
-							{
-								$("#eventDiv_" + side + "_" + i).remove();
-								$("#overflowbar").append($(HTML));
-							}
-						}
-					}
-				}
-				break loopA;
-				*/
 			}
 		}
 	}
 }
-function postExtraEvents(HTML_array)
+function postExtraEvents()
 {
+	var HTML_array = document.getElementById("extra_events").children
 	var heightMax = $("#frontColumn1").height();
 	loopA:
 	for(var i = 0, il = HTML_array.length; i < il; i++)
 	{
-		HTML = $("<span class='extra_event' id='extraEvent_" + i + "'>" + HTML_array[i] + "</span>")
+		HTML = $("<span class='extra_event' id='extraEvent_" + i + "'>" + HTML_array[i].innerHTML + "</span>")
 		$("#front_events_left").append(HTML);
 
 		if($("#front_events_left").height()>heightMax)
@@ -455,7 +429,11 @@ function postExtraEvents(HTML_array)
 	</div>
 
 	</div>
-	<div id="overflowbar" class="dontprint events">
+	<div id="extra_events" class="dontprint" style="display:none;">
+	<div><span class="siteInfo" class="extra_event" style="font-size:10pt;"><span style="text-align: left;"><img src="nps_boston.jpg" style="border-radius:10px;height:.625in;display:inline-block;margin:.0625in .125in .125in .0625in;float:left;">Get more with our FREE award-winning Freedom Trail<sup>®</sup> and Black Heritage Trail<sup>®</sup> app!</span><span style="font-size:10pt;padding-top:8pt;padding-bottom:8pt;font-style:italic;">Search "NPS Boston" in your app store or go to <a href="http://go.nps.gov/boston" target="_blank">go.nps.gov/boston</a></span><span style="height:.375in;"><img style="height:100%;display:inline-block;float:left;" src="android.png"><img style="height:100%;display:inline-block;float:right;" src="apple.png"></span></span></div>
+		<div><span class="siteInfo"><span style="font-size: 12pt;padding-bottom: 14px;">Become a Junior Ranger!</span><br>
+<span style="width:50%;">Kids of all ages are encouraged to Explore, Learn, and Protect at our National Parks in Boston. Ask a Park Ranger how to earn your Junior Ranger badge!</span><span style="width:40%;
+"><img src="Junior_Ranger_grayscale_transparency.gif" style="max-width:100%;"></span></span></div>
 	</div>
 	<script type="text/javascript">
 $(document).ready(function() {

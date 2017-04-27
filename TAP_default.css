@@ -438,6 +438,7 @@ a:link,a:visited
   background-color:lightgrey;
   border-top:1px solid #000;
   border-bottom:1px solid #000;
+  margin-top:6px;
 }
 
 @media print {
